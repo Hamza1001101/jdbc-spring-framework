@@ -1,6 +1,6 @@
 package com.example.demo.data_access;
 
-import com.example.demo.models.Customers;
+import com.example.demo.models.CustomerDetails;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,24 +13,24 @@ import java.util.Date;
 
 public class CustomerRepository {
     private static final String URL = "jdbc:sqlite::resource:Chinook_Sqlite.sqlite";
-    private static ArrayList<com.example.demo.models.Customers> customers = new ArrayList<Customers>();
+    private static ArrayList<CustomerDetails> customers = new ArrayList<CustomerDetails>();
     private static Connection conn = null;
 
-    public ArrayList<Customers> selectAllCustomers() {
+    public ArrayList<CustomerDetails> selectAllCustomers() {
 
         try {
             //Connect to DB
             conn = DriverManager.getConnection(URL);
-
+            log("Connection to SQLite has been established");
             //Make SQL Query
-            PreparedStatement ps = conn.prepareStatement("SELECT  Id, FirstName, LastName, Email,PostalCode, Phone, Country FROM Customer");
+            PreparedStatement ps = conn.prepareStatement("SELECT  CustomerId, FirstName, LastName, Email,PostalCode, Phone, Country FROM Customer");
 
             //Excute Query
             ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()) {
                 customers.add(
-                        new Customers(
-                                resultSet.getString("Id"),
+                        new CustomerDetails(
+                                resultSet.getString("CustomerId"),
                                 resultSet.getString("FirstName"),
                                 resultSet.getString("LastName"),
                                 resultSet.getString("Country"),
