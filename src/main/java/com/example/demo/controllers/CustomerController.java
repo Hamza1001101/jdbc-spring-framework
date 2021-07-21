@@ -2,20 +2,28 @@ package com.example.demo.controllers;
 
 import com.example.demo.data_access.CustomerRepository;
 import com.example.demo.models.Customer;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
-
-@RestController
+@Controller
 public class CustomerController {
 
     private final CustomerRepository customerRepository = new CustomerRepository();
 
+
+
+
+    @GetMapping("/")
+    public String getPeople(Model model) {
+        List<Customer> customers = new ArrayList<>();
+        model.addAttribute("customers", customers);
+        return "index";
+    }
 
     /**
      * Fetching all the customers in the database.
