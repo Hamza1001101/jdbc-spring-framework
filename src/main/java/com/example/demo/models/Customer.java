@@ -1,6 +1,6 @@
 package com.example.demo.models;
 
-public class CustomerDetails {
+public class Customer {
     private String CustomerId;
     private String FirstName;
     private String LastName;
@@ -9,7 +9,7 @@ public class CustomerDetails {
     private String Phone;
     private String Email;
 
-    public CustomerDetails(String customerId, String firstName, String lastName, String country, String postalCode, String phone, String email) {
+    public Customer(String customerId, String firstName, String lastName, String country, String postalCode, String phone, String email) {
         this.CustomerId = customerId;
         this.FirstName = firstName;
         this.LastName = lastName;
