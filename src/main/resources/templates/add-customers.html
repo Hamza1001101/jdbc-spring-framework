@@ -8,7 +8,7 @@
 <body>
 <h1>Add customer to the database</h1>
 
-<form action="#" th:action="@{/add-customers}" th:object="${customer}" method="post">
+<form action="#" th:action="@{/api/customers/add-customer}" th:object="${customer}" method="post">
     <input type="text" class="form-control" placeholder="customer id" th:field="*{CustomerId}" required />
     <input type="text" class="form-control" placeholder="First name" th:field="*{FirstName}" required />
     <input type="text" class="form-control"  placeholder="Last name" th:field="*{LastName}"  />

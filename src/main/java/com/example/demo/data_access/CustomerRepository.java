@@ -185,7 +185,10 @@ public class CustomerRepository {
             conn = DriverManager.getConnection(URL);
             log("Connection to SQLite has been established");
             //Make SQL Query
-            PreparedStatement ps = conn.prepareStatement("SELECT  COUNT(CustomerId) AS Customers, Country FROM Customer GROUP BY Country ORDER BY COUNT(CustomerId) DESC ");
+            PreparedStatement ps = conn.prepareStatement("SELECT  COUNT(CustomerId) AS Customers, Country " +
+                    "FROM Customer " +
+                    "GROUP BY Country " +
+                    "ORDER BY COUNT(CustomerId) DESC ");
 
             //Excute Query
             ResultSet resultSet = ps.executeQuery();

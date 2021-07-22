@@ -19,7 +19,7 @@ public class CustomerController {
         return "index";
     }
 
-    @GetMapping("api/customers")
+    @GetMapping("/api/customers")
     public String getPeople(Model model) {
         model.addAttribute("customers", customerRepository.selectAllCustomers());
         return "view-customers";
@@ -27,7 +27,7 @@ public class CustomerController {
 
 
     // @GetMapping("api/customers/countries")
-    @RequestMapping(value = "api/customers/countries", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/customers/countries", method = RequestMethod.GET)
     public String getCustomerByCountry(Model model) {
         model.addAttribute("countries", customerRepository.selectCustomersByCountry());
         return "view-customers-per-country";
@@ -62,13 +62,13 @@ public class CustomerController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/add-customers", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/customers/add-customer", method = RequestMethod.GET)
     public String addCustomer(Model model) {
         model.addAttribute("customer", new Customer());
         return "add-customers";
     }
 
-    @RequestMapping(value = "/add-customers", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/customers/add-customer", method = RequestMethod.POST)
     public String addCustomer(@ModelAttribute Customer customer, BindingResult error, Model model) {
         Boolean success = customerRepository.addCustomer(customer);
         model.addAttribute("success", success);

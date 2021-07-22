@@ -3,10 +3,34 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Home Page</title>
 </head>
 <body>
-<p>Hello world ThymeLeaf</p>
+<header>
+    <nav>
+        <ul>
+            <li>
+                <a href="/">Home</a>
+            </li>
+            <li>
+                <a href="/api/customers">View All customers</a>
+            </li>
+            <li>
+                <a href="/api/customers/countries">Customers per country</a>
+            </li>
+            <li>
+                <a href="/api/customers/add-customer">Add Customer</a>
+            </li>
+        </ul>
+    </nav>
 
+</header>
+<main>
+    <h1>Welcome</h1>
+    <p>This is a basic example of using Thymeleaf to create a monolithic application with Java.
+        We are using the Northwind SQLite database as a data source and only querying out a
+        portion of the customer table. The functionality of the site is fairly straight forward,
+        we can view existing customers, and we can add new ones.</p>
+</main>
 </body>
 </html>
