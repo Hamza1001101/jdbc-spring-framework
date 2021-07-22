@@ -9,6 +9,10 @@ public class Customer {
     private String Phone;
     private String Email;
 
+    public Customer() {
+
+    }
+
     public Customer(String customerId, String firstName, String lastName, String country, String postalCode, String phone, String email) {
         this.CustomerId = customerId;
         this.FirstName = firstName;
