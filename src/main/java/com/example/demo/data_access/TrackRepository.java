@@ -1,6 +1,6 @@
 package com.example.demo.data_access;
 
-import com.example.demo.models.Genre;
+
 import com.example.demo.models.Track;
 
 import java.sql.Connection;
@@ -15,13 +15,18 @@ public class TrackRepository {
 
     private static Connection conn = null;
 
+    /**
+     * Get all tracks
+     *
+     * @return all tracks
+     */
 
     public ArrayList<Track> getAllTracks() {
         ArrayList<Track> tracks = new ArrayList<>();
         try {
             //Connect to DB
             conn = DriverManager.getConnection(URL);
-            //System.out.println("Connection to SQLite has been established");
+
             //Make SQL Query
             PreparedStatement ps = conn.prepareStatement("SELECT TrackId, Name FROM Track ");
 
@@ -36,7 +41,6 @@ public class TrackRepository {
                         )
                 );
             }
-            //System.out.println("Selected all customers successfully");
 
         } catch (Exception e) {
             e.toString();
@@ -50,23 +54,25 @@ public class TrackRepository {
         return tracks;
     }
 
+    /**
+     * get 5 random tracks
+     *
+     * @return 5 random tracks
+     */
 
     public ArrayList<Track> getRandomTracks() {
 
-        //  Collections.shuffle(genreRepository.getAllGenres());
         Random rand = new Random();
         Track randomElement;
-        ArrayList<Track> te = new ArrayList<>();
-
+        ArrayList<Track> unique = new ArrayList<>();
 
         for (int i = 0; i < 5; i++) {
 
             int randomIndex = rand.nextInt(getAllTracks().size());
             randomElement = getAllTracks().get(randomIndex);
             getAllTracks().remove(randomIndex);
-            te.add(randomElement);
+            unique.add(randomElement);
         }
-
-        return te;
+        return unique;
     }
 }

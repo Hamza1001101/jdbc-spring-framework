@@ -2,10 +2,10 @@ package com.example.demo.models;
 
 public class HighestSpenders {
 
-    private String CustomerId;
-    private String FirstName;
-    private String LastName;
-    private int Total;
+    private final String CustomerId;
+    private final String FirstName;
+    private final String LastName;
+    private final int Total;
 
     public HighestSpenders(String customerId, String firstName, String lastName, int total) {
         this.Total= total;

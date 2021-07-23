@@ -1,8 +1,8 @@
 package com.example.demo.models;
 
 public class Artist {
-    private int ArtistId;
-    private String Name;
+    private final int ArtistId;
+    private final String Name;
 
     public Artist(int artistId, String name) {
         ArtistId = artistId;

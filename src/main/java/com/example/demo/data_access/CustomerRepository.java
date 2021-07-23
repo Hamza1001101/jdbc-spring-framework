@@ -19,6 +19,12 @@ public class CustomerRepository {
     private static Connection conn = null;
     ArrayList<Customer> customers = new ArrayList<>();
 
+
+    /**
+     * Select all customers
+     *
+     * @return all customers
+     */
     public ArrayList<Customer> selectAllCustomers() {
 
         try {
@@ -57,6 +63,12 @@ public class CustomerRepository {
         return customers;
     }
 
+    /**
+     * Returns a specific customer
+     *
+     * @param customerId - customerId
+     * @return - a specific customer's info
+     */
     public Customer selectCustomerById(String customerId) {
         Customer customer = null;
         try {
@@ -99,6 +111,14 @@ public class CustomerRepository {
         return customer;
     }
 
+
+    /**
+     * Selects customer by firstname and lastname
+     *
+     * @param firstName - customer firstname
+     * @param lastName  - customer lastname
+     * @return that specific customer info.
+     */
     public Customer selectCustomerByName(String firstName, String lastName) {
         Customer customer = null;
         try {
@@ -144,6 +164,14 @@ public class CustomerRepository {
         return customer;
     }
 
+
+    /**
+     * selects customers by limit and offset
+     *
+     * @param limit  - the number of customers to be displayed
+     * @param offset - offset
+     * @return a customer list based on limit and offset
+     */
     public ArrayList<Customer> selectCustomersByOffsetAndLimit(int limit, int offset) {
         ArrayList<Customer> customers = new ArrayList<>();
         try {
@@ -181,6 +209,12 @@ public class CustomerRepository {
         return customers;
     }
 
+    /**
+     * Adds a new customer to the database
+     *
+     * @param customer
+     * @return the newly added customer
+     */
     public Boolean addCustomer(Customer customer) {
         boolean success = false;
         try {
@@ -200,13 +234,13 @@ public class CustomerRepository {
             success = (result != 0); // if
             System.out.println("Add went well");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.getMessage();
 
         } finally {
             try {
                 conn.close();
             } catch (Exception exception) {
-                System.out.println(exception.toString());
+                exception.toString();
             }
         }
         // ---
@@ -214,6 +248,11 @@ public class CustomerRepository {
     }
 
 
+    /**
+     * Select customer by country
+     *
+     * @return customers by country
+     */
     public ArrayList<CustomerPerCountry> selectCustomersByCountry() {
         ArrayList<CustomerPerCountry> customersByCountry = new ArrayList<>();
         try {
@@ -250,6 +289,12 @@ public class CustomerRepository {
         return customersByCountry;
     }
 
+    /**
+     * updated an existing customer
+     *
+     * @param id             - customer id
+     * @param updateCustomer - the updatedcustomer
+     */
     public void updateCustomer(String id, Customer updateCustomer) {
         Customer existingCustomer = selectCustomerById(id);
 
@@ -294,6 +339,11 @@ public class CustomerRepository {
         }
     }
 
+    /**
+     * select customers who paid highest
+     *
+     * @return highest spenders
+     */
     public ArrayList<HighestSpenders> selectHighestSpenders() {
         ArrayList<HighestSpenders> highestSpenders = new ArrayList<>();
 
@@ -303,7 +353,7 @@ public class CustomerRepository {
                     "FROM Customer C " +
                     "JOIN Invoice I on C.CustomerId = I.CustomerId " +
                     "GROUP BY I.CustomerId " +
-                    "ORDER BY Total DESC ");
+                    "ORDER BY Total DESC LIMIT 10");
 
             ResultSet resultSet = ps.executeQuery();
 

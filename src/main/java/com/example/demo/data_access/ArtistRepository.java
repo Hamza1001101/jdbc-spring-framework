@@ -1,7 +1,7 @@
 package com.example.demo.data_access;
 
 import com.example.demo.models.Artist;
-import com.example.demo.models.Track;
+
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -16,6 +16,11 @@ public class ArtistRepository {
     private static Connection conn = null;
 
 
+    /**
+     * Returns all artists
+     *
+     * @return All artists
+     */
     public ArrayList<Artist> getAllArtists() {
         ArrayList<Artist> artists = new ArrayList<>();
         try {
@@ -51,12 +56,16 @@ public class ArtistRepository {
     }
 
 
+    /**
+     * Get 5 random artis.
+     *
+     * @return 5 random artists
+     */
     public ArrayList<Artist> getRandomArtists() {
 
-        //  Collections.shuffle(genreRepository.getAllGenres());
         Random rand = new Random();
         Artist randomElement;
-        ArrayList<Artist> te = new ArrayList<>();
+        ArrayList<Artist> unique = new ArrayList<>();
 
 
         for (int i = 0; i < 5; i++) {
@@ -64,9 +73,9 @@ public class ArtistRepository {
             int randomIndex = rand.nextInt(getAllArtists().size());
             randomElement = getAllArtists().get(randomIndex);
             getAllArtists().remove(randomIndex);
-            te.add(randomElement);
+            unique.add(randomElement);
         }
 
-        return te;
+        return unique;
     }
 }

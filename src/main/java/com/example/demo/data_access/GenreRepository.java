@@ -15,68 +15,11 @@ public class GenreRepository {
     private static Connection conn = null;
 
 
-    public Genre selectGenreById(int id) {
-        Genre genres = null;
-        try {
-            //Connect to DB
-            conn = DriverManager.getConnection(URL);
-            System.out.println("Connection to SQLite has been established");
-            //Make SQL Query
-            PreparedStatement ps = conn.prepareStatement(
-                    "SELECT  GenreId, Name FROM Genre " +
-                            "WHERE  GenreId = ? ");
-
-            ps.setInt(1, id);
-            //Excute Query
-            ResultSet resultSet = ps.executeQuery();
-            while (resultSet.next()) {
-                genres = new Genre(
-                        resultSet.getInt("GenreId"),
-                        resultSet.getString("Name")
-                );
-            }
-            System.out.println("Selected all customers successfully");
-
-        } catch (Exception e) {
-            System.out.println(e);
-        } finally {
-            try {
-                conn.close();
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-        }
-        return genres;
-    }
-
-    public int getMaxGenreId() {
-        int maxGenreId = 0;
-        try {
-            //Connect to DB
-            conn = DriverManager.getConnection(URL);
-            System.out.println("Connection to SQLite has been established");
-            //Make SQL Query
-            PreparedStatement ps = conn.prepareStatement(
-                    "SELECT  MAX(GenreId) AS GenreId FROM Genre ");
-
-            ResultSet resultSet = ps.executeQuery();
-            while (resultSet.next()) {
-                maxGenreId = resultSet.getInt("GenreId");
-            }
-
-        } catch (Exception e) {
-            System.out.println(e);
-        } finally {
-            try {
-                conn.close();
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-        }
-        return maxGenreId;
-    }
-
-
+    /**
+     * Get all genres
+     *
+     * @return all genres
+     */
     public ArrayList<Genre> getAllGenres() {
         ArrayList<Genre> genres = new ArrayList<>();
         try {
@@ -112,24 +55,25 @@ public class GenreRepository {
     }
 
 
+    /**
+     * Get 5 random genres.
+     *
+     * @return 5 random genres.
+     */
     public ArrayList<Genre> getRandomGenres() {
 
-        //  Collections.shuffle(genreRepository.getAllGenres());
         Random rand = new Random();
         Genre randomElement;
-        ArrayList<Genre> te = new ArrayList<>();
-
+        ArrayList<Genre> unique = new ArrayList<>();
 
         for (int i = 0; i < 5; i++) {
 
-            int randomIndex = rand.nextInt(getAllGenres().size()) ;
+            int randomIndex = rand.nextInt(getAllGenres().size());
             randomElement = getAllGenres().get(randomIndex);
             getAllGenres().remove(randomIndex);
-            te.add(randomElement);
+            unique.add(randomElement);
         }
-
-
-        return te;
+        return unique;
     }
 
 }

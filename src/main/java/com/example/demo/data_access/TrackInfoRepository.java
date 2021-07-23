@@ -15,19 +15,25 @@ public class TrackInfoRepository {
     private static Connection conn = null;
 
 
+    /**
+     * Gets track info
+     *
+     * @param searchTerm - search Term
+     * @return everything that matches the search term.
+     */
     public ArrayList<TrackInfo> getTrackInfo(String searchTerm) {
         ArrayList<TrackInfo> trackInfoArrayList = new ArrayList<>();
         try {
             //Connect to DB
             conn = DriverManager.getConnection(URL);
 
-            PreparedStatement ps = conn.prepareStatement("SELECT tr.TrackId, tr.Name AS Track, ar.Name AS Artist, al.Title as Album, " +
-                    " ge.Name AS Genre " +
-                    " FROM Track tr " +
-                    " INNER JOIN Album al ON tr.AlbumId = al.AlbumId " +
-                    " INNER JOIN Artist ar ON al.ArtistId= ar.ArtistId " +
-                    " INNER JOIN Genre ge ON tr.GenreId= ge.GenreId " +
-                    " WHERE tr.Name LIKE ?");
+            PreparedStatement ps = conn.prepareStatement("SELECT Tr.TrackId, Tr.Name AS Track, Ar.Name AS Artist, Al.Title as Album, " +
+                    " Ge.Name AS Genre " +
+                    " FROM Track Tr " +
+                    " INNER JOIN Album Al ON Tr.AlbumId = Al.AlbumId " +
+                    " INNER JOIN Artist Ar ON Al.ArtistId= Ar.ArtistId " +
+                    " INNER JOIN Genre Ge ON Tr.GenreId= Ge.GenreId " +
+                    " WHERE Tr.Name LIKE ?");
 
             ps.setString(1, "%" + searchTerm + "%");
 
