@@ -143,6 +143,42 @@ public class CustomerRepository {
         return customer;
     }
 
+    public ArrayList<Customer> selectCustomersByOffsetAndLimit(int limit, int offset) {
+        ArrayList<Customer> customers = new ArrayList<>();
+        try {
+            conn = DriverManager.getConnection(URL);
+            PreparedStatement ps = conn.prepareStatement(" SELECT CustomerId, FirstName, LastName, Email,PostalCode, Phone, Country " +
+                    "FROM Customer LIMIT ? OFFSET ?");
+            ps.setInt(1, limit);
+            ps.setInt(2, offset);
+
+            ResultSet resultSet = ps.executeQuery();
+
+            while (resultSet.next()) {
+                customers.add(
+                        new Customer(
+                                "",
+                                "",
+                                resultSet.getString("LastName"),
+                                resultSet.getString("Country"),
+                                resultSet.getString("PostalCode"),
+                                resultSet.getString("Phone"),
+                                resultSet.getString("Email")
+                        )
+                );
+                log("selectCustomerByOffsetAndLimit executed successfully!");
+            }
+        } catch (Exception e) {
+            log(e.toString());
+        } finally {
+            try {
+                conn.close();
+            } catch (Exception e) {
+                log(e.toString());
+            }
+        }
+        return customers;
+    }
 
     public Boolean addCustomer(Customer customer) {
         boolean success = false;
@@ -214,6 +250,64 @@ public class CustomerRepository {
         return customersByCountry;
     }
 
+    public void updateCustomer(String id, Customer updateCustomer) {
+        Customer existingCustomer = selectCustomerById(id);
+
+        try {
+            conn = DriverManager.getConnection(URL);
+            log("Connection to Database has been established");
+
+            // Make SQL Query
+            PreparedStatement ps = conn.prepareStatement("UPDATE Customer " +
+                    "SET FirstName=?, LastName=?, Country=?, PostalCode=?, Phone=?, Email=? " +
+                    "WHERE CustomerId= ?");
+
+            ps.setString(1, updateCustomer.getFirstName() == null || updateCustomer.getFirstName().isEmpty()
+                    ? existingCustomer.getFirstName() : updateCustomer.getFirstName());
+
+            if (updateCustomer.getLastName() == null || updateCustomer.getLastName().isEmpty()) {
+                ps.setString(2, existingCustomer.getLastName());
+            } else {
+                ps.setString(2, updateCustomer.getLastName());
+            }
+
+            if (updateCustomer.getCountry() == null || updateCustomer.getCountry().isEmpty()) {
+                ps.setString(3, existingCustomer.getCountry());
+            } else {
+                ps.setString(3, updateCustomer.getCountry());
+            }
+
+            if (updateCustomer.getPostalCode() == null || updateCustomer.getPostalCode().isEmpty()) {
+                ps.setString(4, existingCustomer.getPostalCode());
+            } else {
+                ps.setString(4, updateCustomer.getPostalCode());
+            }
+
+            if (updateCustomer.getPhone() == null || updateCustomer.getPhone().isEmpty()) {
+                ps.setString(5, existingCustomer.getPhone());
+            } else {
+                ps.setString(5, updateCustomer.getPhone());
+            }
+
+            if (updateCustomer.getEmail() == null || updateCustomer.getEmail().isEmpty()) {
+                ps.setString(6, existingCustomer.getEmail());
+            } else {
+                ps.setString(6, updateCustomer.getEmail());
+            }
+
+            ps.setString(7, id);
+            ps.executeUpdate();
+            System.out.println("Successfully updated!");
+        } catch (Exception e) {
+            log(e.toString());
+        } finally {
+            try {
+                conn.close();
+            } catch (Exception e) {
+                log(e.toString());
+            }
+        }
+    }
 
     private static void log(String message) {
         DateFormat dateFormat = new SimpleDateFormat("\"yyyy/MM/dd HH:mm:ss\"");

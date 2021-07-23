@@ -1,36 +1,62 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-
+<html lang="en" xmlns:th=http://www.thymeleaf.org>
 <head>
     <meta charset="UTF-8">
+
     <title>Home Page</title>
 </head>
 <body>
+
 <header>
     <nav>
-        <ul>
-            <li>
-                <a href="/">Home</a>
-            </li>
-            <li>
-                <a href="/api/customers">View All customers</a>
-            </li>
-            <li>
-                <a href="/api/customers/countries">Customers per country</a>
-            </li>
-            <li>
-                <a href="/api/customers/add-customer">Add Customer</a>
-            </li>
-        </ul>
+        <div>
+            <a href="/">Home</a>
+            <button>
+                <span></span>
+            </button>
+            <div>
+                <ul>
+                    <li>
+                        <a href="/api/customers">View All Customers</a>
+                    </li>
+                    <li>
+                        <a href="/api/customers/add-customer">Add Customer</a>
+                    </li>
+                    <li>
+                        <a href="/track/search">Search track</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </nav>
 
 </header>
 <main>
-    <h1>Welcome</h1>
-    <p>This is a basic example of using Thymeleaf to create a monolithic application with Java.
-        We are using the Northwind SQLite database as a data source and only querying out a
-        portion of the customer table. The functionality of the site is fairly straight forward,
-        we can view existing customers, and we can add new ones.</p>
+    <p>This is the body of the page</p>
+
+    <section class="genres">
+        <h3>Genres</h3>
+        <ul th:each="genres: ${genres}">
+            <li th:text="${genres.getName()}"></li>
+        </ul>
+    </section>
+<!--   <section class="all-customers">
+       <table>
+           <tbody>
+           <tr th:each="customers: ${customers}">
+               <td th:text="${customers.getCustomerId()}"></td>
+               <td th:text="${customers.getFirstName()}"></td>
+               <td th:text="${customers.getLastName()}"></td>
+               <td th:text="${customers.getCountry()}"></td>
+               <td th:text="${customers.getPostalCode()}"></td>
+               <td th:text="${customers.getPhone()}"></td>
+               <td th:text="${customers.getEmail()}"></td>
+           </tr>
+           </tbody>
+       </table>
+   </section>-->
 </main>
+
+
 </body>
 </html>
