@@ -1,9 +1,7 @@
 package com.example.demo.data_access;
 
-import com.example.demo.models.Customer;
 import com.example.demo.models.Genre;
 
-import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -79,34 +77,59 @@ public class GenreRepository {
     }
 
 
+    public ArrayList<Genre> getAllGenres() {
+        ArrayList<Genre> genres = new ArrayList<>();
+        try {
+            //Connect to DB
+            conn = DriverManager.getConnection(URL);
+            //System.out.println("Connection to SQLite has been established");
+            //Make SQL Query
+            PreparedStatement ps = conn.prepareStatement("SELECT GenreId, Name FROM Genre ");
+
+            //Excute Query
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+
+                genres.add(
+                        new Genre(
+                                resultSet.getInt("GenreId"),
+                                resultSet.getString("Name")
+                        )
+                );
+            }
+            //System.out.println("Selected all customers successfully");
+
+        } catch (Exception e) {
+            e.toString();
+        } finally {
+            try {
+                conn.close();
+            } catch (Exception e) {
+                e.toString();
+            }
+        }
+        return genres;
+    }
 
 
     public ArrayList<Genre> getRandomGenres() {
-        ArrayList<Genre> genres = new ArrayList<>();
-        Random random = new Random();
-        int maxGenreId = getMaxGenreId();
-        ArrayList<Integer> previousRandomNumbers = new ArrayList<>();
+
+        //  Collections.shuffle(genreRepository.getAllGenres());
+        Random rand = new Random();
+        Genre randomElement;
+        ArrayList<Genre> te = new ArrayList<>();
 
 
-        int i = 0;
-        while (i < 5) {
-            // Check if this random statement is correct
-            int randomNumber = random.nextInt(getMaxGenreId()) + 1;
+        for (int i = 0; i < 5; i++) {
 
-            while (previousRandomNumbers.contains(randomNumber)) {
-                randomNumber = random.nextInt(getMaxGenreId()) + 1;
-            }
-
-//            System.out.println(randomNumber);
-
-            genres.add(selectGenreById(randomNumber));
-
-            previousRandomNumbers.add(randomNumber);
-            i++;
+            int randomIndex = rand.nextInt(getAllGenres().size()) ;
+            randomElement = getAllGenres().get(randomIndex);
+            getAllGenres().remove(randomIndex);
+            te.add(randomElement);
         }
 
 
-        return genres;
-
+        return te;
     }
+
 }

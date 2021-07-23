@@ -1,81 +1,86 @@
 package com.example.demo.models;
 
 public class Customer {
-    private String CustomerId;
-    private String FirstName;
-    private String LastName;
-    private String Country;
-    private String PostalCode;
-    private String Phone;
-    private String Email;
+    private String customerId;
+    private String firstName;
+    private String lastName;
+    private String country;
+    private String postalCode;
+    private String phone;
+    private String email;
 
+
+    /**
+     * Default constructor.
+     */
     public Customer() {
 
     }
 
     public Customer(String customerId, String firstName, String lastName, String country, String postalCode, String phone, String email) {
-        this.CustomerId = customerId;
-        this.FirstName = firstName;
-        this.LastName = lastName;
-        this.Country = country;
-        this.PostalCode = postalCode;
-        this.Phone = phone;
-        this.Email = email;
+        this.customerId = customerId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.country = country;
+        this.postalCode = postalCode;
+        this.phone = phone;
+        this.email = email;
     }
 
+
     public String getCustomerId() {
-        return CustomerId;
+        return customerId;
     }
 
     public void setCustomerId(String customerId) {
-        this.CustomerId = customerId;
+        this.customerId = customerId;
     }
 
     public String getFirstName() {
-        return FirstName;
+        return firstName;
     }
 
     public void setFirstName(String firstName) {
-        this.FirstName = firstName;
+        this.firstName = firstName;
     }
 
     public String getLastName() {
-        return LastName;
+        return lastName;
     }
 
     public void setLastName(String lastName) {
-        this.LastName = lastName;
+        this.lastName = lastName;
     }
 
     public String getCountry() {
-        return Country;
+        return country;
     }
 
     public void setCountry(String country) {
-        this.Country = country;
+        this.country = country;
     }
 
     public String getPostalCode() {
-        return PostalCode;
+        return postalCode;
     }
 
     public void setPostalCode(String postalCode) {
-        this.PostalCode = postalCode;
+        this.postalCode = postalCode;
     }
 
     public String getPhone() {
-        return Phone;
+        return phone;
     }
 
     public void setPhone(String phone) {
-        this.Phone = phone;
+        this.phone = phone;
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public void setEmail(String email) {
-        this.Email = email;
+        this.email = email;
     }
 }

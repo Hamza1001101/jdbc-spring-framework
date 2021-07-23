@@ -3,8 +3,7 @@ package com.example.demo.controllers;
 import com.example.demo.data_access.CustomerRepository;
 import com.example.demo.models.Customer;
 import com.example.demo.models.CustomerPerCountry;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
+import com.example.demo.models.HighestSpenders;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -70,12 +69,12 @@ public class CustomerRestController {
      * Adds a new customer to the database.
      *
      * @param customer - the new customer we adding.
-     * @param error
      */
 
-    @RequestMapping(value = "/api/customers/add-customer", method = RequestMethod.POST)
-    public void addCustomer(@RequestBody Customer customer, BindingResult error) {
-        customerRepository.addCustomer(customer);
+    @RequestMapping(value = "/api/customer/", method = RequestMethod.POST)
+    public boolean addCustomer(@RequestBody Customer customer) {
+        System.out.println(customer.getFirstName());
+        return  customerRepository.addCustomer(customer);
     }
 
 
@@ -98,6 +97,15 @@ public class CustomerRestController {
     @RequestMapping(value = "/api/customers/customer-per-countries", method = RequestMethod.GET)
     public ArrayList<CustomerPerCountry> getCustomerByCountry() {
         return customerRepository.selectCustomersByCountry();
+    }
+
+    /**
+     * Read customers who are the highest spenders.
+     * @return returns the total each customer spent
+     */
+    @RequestMapping(value = "/api/customers/highest-spenders", method = RequestMethod.GET)
+    public ArrayList<HighestSpenders> getHighestSpenders() {
+        return customerRepository.selectHighestSpenders();
     }
 
 

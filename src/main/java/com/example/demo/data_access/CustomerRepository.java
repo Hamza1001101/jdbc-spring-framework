@@ -2,6 +2,7 @@ package com.example.demo.data_access;
 
 import com.example.demo.models.Customer;
 import com.example.demo.models.CustomerPerCountry;
+import com.example.demo.models.HighestSpenders;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -183,25 +184,24 @@ public class CustomerRepository {
     public Boolean addCustomer(Customer customer) {
         boolean success = false;
         try {
-            // connect
             conn = DriverManager.getConnection(URL);
-            PreparedStatement prep =
-                    conn.prepareStatement("INSERT INTO Customer(CustomerId, FirstName, LastName, Email,PostalCode, Phone, Country)" +
-                            " VALUES(?,?,?,?,?,?, ?)");
-            prep.setString(1, customer.getCustomerId());
-            prep.setString(2, customer.getFirstName());
-            prep.setString(3, customer.getLastName());
-            prep.setString(4, customer.getCountry());
-            prep.setString(5, customer.getPostalCode());
-            prep.setString(6, customer.getPhone());
-            prep.setString(7, customer.getEmail());
-            int result = prep.executeUpdate();
-            success = (result != 0); // if res = 1; true
+            PreparedStatement preparedStatement = conn.prepareStatement(
+                    "INSERT INTO Customer (CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email) " +
+                            "VALUES (?, ?, ?, ?, ?, ?, ?)");
+            preparedStatement.setString(1, customer.getCustomerId());
+            preparedStatement.setString(2, customer.getFirstName());
+            preparedStatement.setString(3, customer.getLastName());
+            preparedStatement.setString(4, customer.getCountry());
+            preparedStatement.setString(5, customer.getPostalCode());
+            preparedStatement.setString(6, customer.getPhone());
+            preparedStatement.setString(7, customer.getEmail());
 
-            System.out.println("Add went well!");
+            int result = preparedStatement.executeUpdate();
+            success = (result != 0); // if
+            System.out.println("Add went well");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
 
-        } catch (Exception exception) {
-            System.out.println(exception.toString());
         } finally {
             try {
                 conn.close();
@@ -265,35 +265,20 @@ public class CustomerRepository {
             ps.setString(1, updateCustomer.getFirstName() == null || updateCustomer.getFirstName().isEmpty()
                     ? existingCustomer.getFirstName() : updateCustomer.getFirstName());
 
-            if (updateCustomer.getLastName() == null || updateCustomer.getLastName().isEmpty()) {
-                ps.setString(2, existingCustomer.getLastName());
-            } else {
-                ps.setString(2, updateCustomer.getLastName());
-            }
+            ps.setString(2, updateCustomer.getLastName() == null || updateCustomer.getLastName().isEmpty()
+                    ? existingCustomer.getLastName() : updateCustomer.getLastName());
 
-            if (updateCustomer.getCountry() == null || updateCustomer.getCountry().isEmpty()) {
-                ps.setString(3, existingCustomer.getCountry());
-            } else {
-                ps.setString(3, updateCustomer.getCountry());
-            }
+            ps.setString(3, updateCustomer.getCountry() == null || updateCustomer.getCountry().isEmpty()
+                    ? existingCustomer.getCountry() : updateCustomer.getCountry());
 
-            if (updateCustomer.getPostalCode() == null || updateCustomer.getPostalCode().isEmpty()) {
-                ps.setString(4, existingCustomer.getPostalCode());
-            } else {
-                ps.setString(4, updateCustomer.getPostalCode());
-            }
+            ps.setString(4, updateCustomer.getPostalCode() == null || updateCustomer.getPostalCode().isEmpty()
+                    ? existingCustomer.getPostalCode() : updateCustomer.getPostalCode());
 
-            if (updateCustomer.getPhone() == null || updateCustomer.getPhone().isEmpty()) {
-                ps.setString(5, existingCustomer.getPhone());
-            } else {
-                ps.setString(5, updateCustomer.getPhone());
-            }
+            ps.setString(5, updateCustomer.getPhone() == null || updateCustomer.getPhone().isEmpty()
+                    ? existingCustomer.getPhone() : updateCustomer.getPhone());
 
-            if (updateCustomer.getEmail() == null || updateCustomer.getEmail().isEmpty()) {
-                ps.setString(6, existingCustomer.getEmail());
-            } else {
-                ps.setString(6, updateCustomer.getEmail());
-            }
+            ps.setString(6, updateCustomer.getEmail() == null || updateCustomer.getEmail().isEmpty()
+                    ? existingCustomer.getEmail() : updateCustomer.getEmail());
 
             ps.setString(7, id);
             ps.executeUpdate();
@@ -307,6 +292,41 @@ public class CustomerRepository {
                 log(e.toString());
             }
         }
+    }
+
+    public ArrayList<HighestSpenders> selectHighestSpenders() {
+        ArrayList<HighestSpenders> highestSpenders = new ArrayList<>();
+
+        try {
+            conn = DriverManager.getConnection(URL);
+            PreparedStatement ps = conn.prepareStatement("SELECT C.CustomerId, C.FirstName, C.LastName, SUM(TOTAL) AS Total " +
+                    "FROM Customer C " +
+                    "JOIN Invoice I on C.CustomerId = I.CustomerId " +
+                    "GROUP BY I.CustomerId " +
+                    "ORDER BY Total DESC ");
+
+            ResultSet resultSet = ps.executeQuery();
+
+            while (resultSet.next()) {
+                highestSpenders.add(
+                        new HighestSpenders(
+                                resultSet.getString("CustomerId"),
+                                resultSet.getString("FirstName"),
+                                resultSet.getString("LastName"),
+                                resultSet.getInt("Total")
+                        )
+                );
+            }
+        } catch (Exception e) {
+            e.toString();
+        } finally {
+            try {
+                conn.close();
+            } catch (Exception e) {
+                e.toString();
+            }
+        }
+        return highestSpenders;
     }
 
     private static void log(String message) {

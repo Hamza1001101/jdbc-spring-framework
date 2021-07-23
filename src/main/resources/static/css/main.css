@@ -1,0 +1,54 @@
+/**
+General syling.
+*/
+body, *, html {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+ul {
+    list-style-type: none;
+}
+a {
+    display: block;
+    text-decoration: none;
+}
+a:hover {
+    cursor: pointer;
+    color: red;
+}
+h3 {
+    padding-bottom: 2rem;
+}
+.container {
+
+    width: 80rem;
+    margin: 0 auto;
+    height: 90vh;
+}
+
+.ul {
+    display: flex;
+
+    justify-content: space-between;
+}
+
+.info-section, .nav {
+    padding: 3rem;
+
+}
+.article-sections {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    margin-top: 3rem;
+    grid-gap: .5rem;
+    justify-items: center;
+}
+
+.tracks, .genres, .artists {
+    padding: 1em;
+    border: 1px solid black;
+    width: 20rem;
+    height: 30vh;
+    text-align: center;
+}
