@@ -10,4 +10,4 @@ The application is published on Heroku.
 * Access ChinookSQL Lite database through JDBC.
 * A Thymeleaf view to show database data according to specifications. 
 * This should be in one project. 
-* The Application must be published as a Docker container on Heroku. 
+* The Application must be published as a Docker 🐳 container on Heroku. 
