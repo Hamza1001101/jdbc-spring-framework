@@ -1,6 +1,5 @@
 # JDBC-Spring-Boot-Framework
-Spring boot application in Java. Using the ChinookSQL database through JDBC. Thymeleaf is used to generate some server side rendered views.  
-The application is published on Heroku.
+Spring boot application in Java. Using the ChinookSQL database through JDBC. Thymeleaf is used to generate some server side rendered views. The application is published on Heroku.
 
 ## 1. Development Enviroment
 * Intellij IDE
