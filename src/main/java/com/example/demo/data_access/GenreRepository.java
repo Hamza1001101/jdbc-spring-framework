@@ -60,8 +60,8 @@ public class GenreRepository {
      *
      * @return 5 random genres.
      */
-    public  ArrayList<Genre> generateRandomGenres() {
-        ArrayList<Genre> randomlyGeneratedList =  new ArrayList<>();
+    public ArrayList<Genre> generateRandomGenres() {
+        ArrayList<Genre> randomlyGeneratedList = new ArrayList<>();
         ArrayList<Genre> genres = new ArrayList<>(getAllGenres());
         Collections.shuffle(genres);
 

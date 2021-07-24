@@ -1,6 +1,7 @@
 package com.example.demo.data_access;
 
 
+import com.example.demo.models.Genre;
 import com.example.demo.models.Track;
 
 import java.sql.Connection;
@@ -8,6 +9,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 public class TrackRepository {
@@ -61,18 +63,14 @@ public class TrackRepository {
      */
 
     public ArrayList<Track> getRandomTracks() {
-
-        Random rand = new Random();
-        Track randomElement;
-        ArrayList<Track> unique = new ArrayList<>();
+        ArrayList<Track> randomlyGeneratedList = new ArrayList<>();
+        ArrayList<Track> tracks= new ArrayList<>(getAllTracks());
+        Collections.shuffle(tracks);
 
         for (int i = 0; i < 5; i++) {
-
-            int randomIndex = rand.nextInt(getAllTracks().size());
-            randomElement = getAllTracks().get(randomIndex);
-            getAllTracks().remove(randomIndex);
-            unique.add(randomElement);
+            randomlyGeneratedList.add(tracks.get(i));
         }
-        return unique;
+        return randomlyGeneratedList;
     }
+
 }

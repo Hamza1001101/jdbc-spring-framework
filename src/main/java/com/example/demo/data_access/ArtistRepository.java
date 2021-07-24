@@ -1,12 +1,14 @@
 package com.example.demo.data_access;
 
 import com.example.demo.models.Artist;
+import com.example.demo.models.Track;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 public class ArtistRepository {
@@ -61,20 +63,14 @@ public class ArtistRepository {
      * @return 5 random artists
      */
     public ArrayList<Artist> getRandomArtists() {
-
-        Random rand = new Random();
-        Artist randomElement;
-        ArrayList<Artist> unique = new ArrayList<>();
-
+        ArrayList<Artist> randomlyGeneratedList = new ArrayList<>();
+        ArrayList<Artist> artists = new ArrayList<>(getAllArtists());
+        Collections.shuffle(artists);
 
         for (int i = 0; i < 5; i++) {
-
-            int randomIndex = rand.nextInt(getAllArtists().size());
-            randomElement = getAllArtists().get(randomIndex);
-            getAllArtists().remove(randomIndex);
-            unique.add(randomElement);
+            randomlyGeneratedList.add(artists.get(i));
         }
-
-        return unique;
+        return randomlyGeneratedList;
     }
+
 }
