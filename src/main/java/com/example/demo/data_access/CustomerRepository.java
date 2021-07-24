@@ -17,7 +17,6 @@ public class CustomerRepository {
     private static final String URL = "jdbc:sqlite::resource:Chinook_Sqlite.sqlite";
 
     private static Connection conn = null;
-    ArrayList<Customer> customers = new ArrayList<>();
 
 
     /**
@@ -26,7 +25,7 @@ public class CustomerRepository {
      * @return all customers
      */
     public ArrayList<Customer> selectAllCustomers() {
-
+        ArrayList<Customer> customers = new ArrayList<>();
         try {
             //Connect to DB
             conn = DriverManager.getConnection(URL);
@@ -96,7 +95,7 @@ public class CustomerRepository {
 
                 );
             }
-            log("Selected all customers successfully");
+            log("selected customer by id successfully");
 
 
         } catch (Exception e) {
@@ -149,7 +148,7 @@ public class CustomerRepository {
 
                 );
             }
-            log("Selected all customers successfully");
+            log("Selected customer by name successfully");
 
 
         } catch (Exception e) {
@@ -186,8 +185,8 @@ public class CustomerRepository {
             while (resultSet.next()) {
                 customers.add(
                         new Customer(
-                                "",
-                                "",
+                                resultSet.getString("CustomerId"),
+                                resultSet.getString("FirstName"),
                                 resultSet.getString("LastName"),
                                 resultSet.getString("Country"),
                                 resultSet.getString("PostalCode"),
@@ -234,7 +233,7 @@ public class CustomerRepository {
             success = (result != 0); // if
             System.out.println("Add went well");
         } catch (Exception e) {
-            e.getMessage();
+            e.toString();
 
         } finally {
             try {
@@ -293,7 +292,7 @@ public class CustomerRepository {
      * updated an existing customer
      *
      * @param id             - customer id
-     * @param updateCustomer - the updatedcustomer
+     * @param updateCustomer - the updated customer
      */
     public void updateCustomer(String id, Customer updateCustomer) {
         Customer existingCustomer = selectCustomerById(id);

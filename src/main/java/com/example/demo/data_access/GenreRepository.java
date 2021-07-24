@@ -6,7 +6,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class GenreRepository {
 
@@ -40,8 +41,6 @@ public class GenreRepository {
                         )
                 );
             }
-            //System.out.println("Selected all customers successfully");
-
         } catch (Exception e) {
             e.toString();
         } finally {
@@ -63,15 +62,15 @@ public class GenreRepository {
     public ArrayList<Genre> getRandomGenres() {
 
         Random rand = new Random();
-        Genre randomElement;
+        Genre randomGenre;
         ArrayList<Genre> unique = new ArrayList<>();
 
         for (int i = 0; i < 5; i++) {
 
             int randomIndex = rand.nextInt(getAllGenres().size());
-            randomElement = getAllGenres().get(randomIndex);
+            randomGenre = getAllGenres().get(randomIndex);
             getAllGenres().remove(randomIndex);
-            unique.add(randomElement);
+            unique.add(randomGenre);
         }
         return unique;
     }

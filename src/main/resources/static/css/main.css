@@ -1,5 +1,5 @@
 /**
-General syling.
+General styling.
 */
 body, *, html {
     padding: 0;
@@ -20,6 +20,8 @@ a:hover {
 h3 {
     padding-bottom: 2rem;
 }
+
+/******MAIN LAYOUT********/
 .container {
 
     width: 80rem;
@@ -29,7 +31,6 @@ h3 {
 
 .ul {
     display: flex;
-
     justify-content: space-between;
 }
 

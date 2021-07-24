@@ -47,7 +47,6 @@ public class CustomerRestController {
      */
     @GetMapping("api/customers/customer")
     public Customer getCustomerByName(@RequestParam(name = "firstName") String firstName, @RequestParam(name = "lastName") String lastName) {
-        //model.addAttribute("customer", customerRepository.selectCustomerByName(firstName, lastName));
         return customerRepository.selectCustomerByName(firstName, lastName);
     }
 
@@ -73,7 +72,6 @@ public class CustomerRestController {
 
     @RequestMapping(value = "/api/customer/", method = RequestMethod.POST)
     public boolean addCustomer(@RequestBody Customer customer) {
-        System.out.println(customer.getFirstName());
         return  customerRepository.addCustomer(customer);
     }
 

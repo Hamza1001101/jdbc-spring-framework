@@ -2,7 +2,6 @@ package com.example.demo.data_access;
 
 import com.example.demo.models.Artist;
 
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
