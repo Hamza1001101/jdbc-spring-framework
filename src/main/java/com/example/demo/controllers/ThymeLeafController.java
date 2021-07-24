@@ -21,7 +21,7 @@ public class ThymeLeafController {
     @GetMapping("/")
     public String homePage(Model model) {
 
-        model.addAttribute("genres", genreRepository.getRandomGenres());
+        model.addAttribute("genres", genreRepository.generateRandomGenres());
         model.addAttribute("tracks", trackRepository.getRandomTracks());
         model.addAttribute("artists", artistRepository.getRandomArtists());
         model.addAttribute("customers", customerRepository.selectAllCustomers());

@@ -3,6 +3,7 @@ package com.example.demo.controllers;
 import com.example.demo.data_access.CustomerRepository;
 import com.example.demo.models.Customer;
 import com.example.demo.models.CustomerPerCountry;
+import com.example.demo.models.CustomersMostPopularGenre;
 import com.example.demo.models.HighestSpenders;
 import org.springframework.web.bind.annotation.*;
 
@@ -72,7 +73,7 @@ public class CustomerRestController {
 
     @RequestMapping(value = "/api/customer/", method = RequestMethod.POST)
     public boolean addCustomer(@RequestBody Customer customer) {
-        return  customerRepository.addCustomer(customer);
+        return customerRepository.addCustomer(customer);
     }
 
 
@@ -99,6 +100,7 @@ public class CustomerRestController {
 
     /**
      * Read customers who are the highest spenders.
+     *
      * @return returns the total each customer spent
      */
     @RequestMapping(value = "/api/customers/highest-spenders", method = RequestMethod.GET)
@@ -106,5 +108,15 @@ public class CustomerRestController {
         return customerRepository.selectHighestSpenders();
     }
 
+    /**
+     * Read a given customers most popular genre
+     *
+     * @param id - customer id
+     * @return - the firstname, lastname, genreType and GenreCount of that specific customer.
+     */
+    @RequestMapping(value = "/api/customers/most-popular-genre/{id}", method = RequestMethod.GET)
+    public ArrayList<CustomersMostPopularGenre> getCustomersMostPopularGenre(@PathVariable String id) {
+        return customerRepository.selectCustomersMostPopularGenre(id);
+    }
 
 }

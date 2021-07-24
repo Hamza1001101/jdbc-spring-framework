@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 public class GenreRepository {
@@ -59,20 +60,14 @@ public class GenreRepository {
      *
      * @return 5 random genres.
      */
-    public ArrayList<Genre> getRandomGenres() {
-
-        Random rand = new Random();
-        Genre randomGenre;
-        ArrayList<Genre> unique = new ArrayList<>();
+    public  ArrayList<Genre> generateRandomGenres() {
+        ArrayList<Genre> randomlyGeneratedList =  new ArrayList<>();
+        ArrayList<Genre> genres = new ArrayList<>(getAllGenres());
+        Collections.shuffle(genres);
 
         for (int i = 0; i < 5; i++) {
-
-            int randomIndex = rand.nextInt(getAllGenres().size());
-            randomGenre = getAllGenres().get(randomIndex);
-            getAllGenres().remove(randomIndex);
-            unique.add(randomGenre);
+            randomlyGeneratedList.add(genres.get(i));
         }
-        return unique;
+        return randomlyGeneratedList;
     }
-
 }

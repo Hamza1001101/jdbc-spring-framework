@@ -12,9 +12,12 @@ public class Customer {
 
     /**
      * Default constructor.
+     * @param firstName
+     * @param lastName
+     * @param genreType
+     * @param genreCount
      */
-    public Customer() {
-
+    public Customer(String firstName, String lastName, String genreType, int genreCount) {
     }
 
     public Customer(String customerId, String firstName, String lastName, String country, String postalCode, String phone, String email) {

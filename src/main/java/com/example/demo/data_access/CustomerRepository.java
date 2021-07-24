@@ -2,6 +2,7 @@ package com.example.demo.data_access;
 
 import com.example.demo.models.Customer;
 import com.example.demo.models.CustomerPerCountry;
+import com.example.demo.models.CustomersMostPopularGenre;
 import com.example.demo.models.HighestSpenders;
 
 import java.sql.Connection;
@@ -376,6 +377,56 @@ public class CustomerRepository {
             }
         }
         return highestSpenders;
+    }
+
+    /**
+     * Select the most popular genre of a specific customer
+     *
+     * @param id - customer id
+     * @return info about the most poplar genre of that customer
+     */
+    public ArrayList<CustomersMostPopularGenre> selectCustomersMostPopularGenre(String id) {
+        ArrayList<CustomersMostPopularGenre> customersMostPopularGenre = new ArrayList<>();
+
+        try {
+            conn = DriverManager.getConnection(URL);
+            PreparedStatement ps = conn.prepareStatement("WITH CustomersMostPopularGenre AS (\n" +
+                    "    SELECT Cu.FirstName, Cu.LastName, Ge.Name AS GenreType, COUNT(Ge.GenreId) AS GenreCount\n" +
+                    "    FROM Customer Cu\n" +
+                    "             INNER JOIN Invoice Inv ON Cu.CustomerId = Inv.CustomerId\n" +
+                    "             INNER JOIN InvoiceLine Il ON Inv.InvoiceId = Il.InvoiceId\n" +
+                    "             INNER JOIN Track Tr ON Tr.TrackId = Il.TrackId\n" +
+                    "             INNER JOIN Genre Ge ON Ge.GenreId = Tr.GenreId\n" +
+                    "    WHERE Cu.CustomerId = ?\n" +
+                    "    GROUP BY Ge.GenreId)\n" +
+                    "\n" +
+                    "SELECT CustomersMostPopularGenre.*\n" +
+                    "FROM CustomersMostPopularGenre\n" +
+                    "WHERE GenreCount = (SELECT MAX(GenreCount) FROM CustomersMostPopularGenre)");
+
+            ps.setString(1, id);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                customersMostPopularGenre.add(
+                        new CustomersMostPopularGenre(
+                                resultSet.getString("FirstName"),
+                                resultSet.getString("LastName"),
+                                resultSet.getString("GenreType"),
+                                resultSet.getInt("GenreCount")
+                        )
+                );
+            }
+        } catch (Exception e) {
+            e.toString();
+        } finally {
+            try {
+                conn.close();
+            } catch (Exception e) {
+                e.getMessage();
+            }
+        }
+        return customersMostPopularGenre;
+
     }
 
     private static void log(String message) {
