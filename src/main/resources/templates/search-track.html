@@ -1,48 +1,73 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
+<link rel="stylesheet" th:href="@{/css/main.css}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Encode+Sans+SC:wght@200&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200&display=swap" rel="stylesheet">
 <head>
     <meta charset="UTF-8">
     <title>Search Track</title>
+
 </head>
 <body>
-<h1>Hi, Coming from the search view</h1>
+<div class="container">
 
+    <header>
+        <nav class="nav">
+            <ul class="ul">
+                <div>
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                </div>
 
-<section class="search-track">
+                <li>
+                    <a href="/track/search">Search Track</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <section class="search-track">
 
-    <form action="#"  th:action="@{/track/search}" method="post">
-        <input name="searchTerm" type="text" th:value="${searchTerm}">
-        <button type="submit">Search</button>
-    </form>
+        <article class="text">
+            <h1>You can search tracks here!</h1>
+        </article>
 
-    <article class="display-search-result">
-        <h2 th:if="${success}" th:text="'You searched for: ' + ${searchTerm} "></h2>
-        <table>
-            <thead>
-            <tr>
-                <!--  <th>#</th>-->
-              <th>Track</th>
-              <th>Artist</th>
-              <th>Album</th>
-              <th>Genre</th>
-          </tr>
+        <form action="#" th:action="@{/track/search}" method="post">
+            <input name="searchTerm" type="text" th:value="${searchTerm}" placeholder="Search track..."
+                   class="search-bar">
+            <input type="submit" class="search-btn" value="Search Track">
 
-          </thead>
-          <tbody>
-          <tr th:each="trackInfo: ${trackInfo}">
-              <!--<td th:text="${trackInfo.getTrackId()}"></td> !-->
-                <td th:text="${trackInfo.getTrackName()}"></td>
-                <td th:text="${trackInfo.getArtistName()}"></td>
-                <td th:text="${trackInfo.getAlbumTitle()}"></td>
-                <td th:text="${trackInfo.getGenre()}"></td>
-            </tr>
+        </form>
 
-            </tbody>
-        </table>
-    </article>
+        <article class="display-search-result">
+            <h2 th:if="${success}" th:text="'You searched for: ' + ${searchTerm} "></h2>
+            <table class="tracks">
+                <thead>
+                <tr>
+                    <th>Track</th>
+                    <th>Artist</th>
+                    <th>Album</th>
+                    <th>Genre</th>
+                </tr>
 
-</section>
+                </thead>
+                <tbody>
+                <tr th:each="trackInfo: ${trackInfo}">
+                    <td th:text="${trackInfo.getTrackName()}"></td>
+                    <td th:text="${trackInfo.getArtistName()}"></td>
+                    <td th:text="${trackInfo.getAlbumTitle()}"></td>
+                    <td th:text="${trackInfo.getGenre()}"></td>
+                </tr>
 
+                </tbody>
+            </table>
+        </article>
+
+    </section>
+</div>
 </body>
 </html>

@@ -1,7 +1,6 @@
 package com.example.demo.data_access;
 
 import com.example.demo.models.Artist;
-import com.example.demo.models.Track;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,7 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Random;
+
 
 public class ArtistRepository {
     private static final String URL = "jdbc:sqlite::resource:Chinook_Sqlite.sqlite";

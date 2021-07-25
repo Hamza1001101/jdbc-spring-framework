@@ -5,21 +5,41 @@ body, *, html {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    background-color: azure;
+    font-family: 'Inconsolata', monospace;
 }
+
+body {
+    background-color: #0b091f;
+    color: white;
+    line-height: 1.6;
+}
+
 ul {
     list-style-type: none;
 }
+
 a {
     display: block;
     text-decoration: none;
+    color: #f0573d;
+    font-weight: bolder;
 }
+
 a:hover {
     cursor: pointer;
-    color: red;
+    color: #5544f2;
 }
+
 h3 {
     padding-bottom: 2rem;
+}
+
+h1, h2, h3, h4, h5, a {
+    font-family: 'Encode Sans SC', sans-serif;
+}
+
+.info-section-header {
+    margin-bottom: 2rem;
 }
 
 /******MAIN LAYOUT********/
@@ -35,22 +55,79 @@ h3 {
     justify-content: space-between;
 }
 
-.info-section, .nav {
-    padding: 3rem;
+.info-section, .nav, .search-track {
+    padding: 1.5rem 3rem;
 
 }
+
 .article-sections {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    margin-top: 3rem;
+    margin-top: 1.5rem;
     grid-gap: .5rem;
     justify-items: center;
 }
 
 .tracks, .genres, .artists {
     padding: 1em;
-    border: 1px solid black;
+    border: 1px solid #f0573d;
     width: 20rem;
-    height: 30vh;
+    height: 40vh;
     text-align: center;
+}
+
+/*************TABLE DESIGN + Search-track page style ***************/
+
+.text {
+    margin: 2rem 0;
+}
+
+.search-track > form {
+    margin-bottom: 2rem;
+}
+
+.search-bar {
+    height: 46px;
+    margin-right: .5rem;
+    border: 0.5px solid lightgray;
+    width: 20rem;
+    padding-right: 40px;
+    padding-left: 10px;
+    outline: none;
+    font-size: 16px;
+}
+
+.search-btn {
+    padding: 15px;
+    width: 10rem;
+    cursor: pointer;
+    background-color: #5544f2;
+    border: none;
+    color: white;
+    font-size: 16px;
+}
+
+.search-btn:hover {
+    background-color: #f0573d;
+    color: black;
+}
+
+.search-bar:hover {
+    background-color: lightgray;
+}
+
+.tracks {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.tracks td, .tracks th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.tracks th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
 }
